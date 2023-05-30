@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+    <title>Odin - HTML Form Validation</title>
+</head>
+<body>
+    <div class="main wrapper">
+        <div class="col-5 background-img">
+            <div class="logo-container">
+                <img src="./logo/logo.png" alt="Odin Logo" 
+                    title="Odin Logo" class="logo" />
+                <h1 class="logo-text">Odin</h1>
+            </div>
+        </div>
+        <div class="col-7">
+            <div class="top-section">
+                <p class="lead text-width">This is not a real online service! You know you need 
+                    something like this in your life to help you realize 
+                    your deepest dreams. <br/>
+                    Sign up <em>now</em> to get started.
+                </p>
+                <p class="lead">You <em>know</em> you want to.</p>
+            </div>
+            <div class="form-section">
+                <h2 class="">Let's go!</h2>
+                <form action="#" method="POST" id="odin-form">
+                    <div class="form-group">
+                        <label for="fname">First Name</label>
+                        <input type="text" name="fname" minlength="2" maxlength="25">
+                    </div>
+                    <div class="form-group">
+                        <label for="lname">Last Name</label>
+                        <input type="text" name="lname" minlength="2" maxlength="25">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email">
+                    </div>
+                    <div class="form-group">
+                        <!-- add numbers only verification-->
+                        <label for="number">Phone Number</label>
+                        <input type="text" name="number" id="number" minlength="12" 
+                            maxlength="12" placeholder="XXX-XXX-XXXX" 
+                            pattern="(\d{3}[\-]\d{3}[\-]\d{4}?)">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input class="error" type="password" name="password" id="password">
+                    </div>
+                    <div class="form-group">
+                        <label for="password-confirm">Confirm Password</label>
+                        <input class="error" type="password" name="password-confirm" id="password-confirm">
+                        <span class="error" id="error-popup" aria-live="polite"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="bottom-section">
+                <div class="submit-group">
+                    <button type="submit" form="odin-form" class="btn-submit">Create Account</button>
+                    <p>Already have an account? <a href="#">Log in</a>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<footer>
+    <script>
+
+const form = document.getElementById("odin-form");
+        const email = document.getElementById("email");
+        const password1 = document.getElementById("password");
+        const password2 = document.getElementById("password-confirm");
+        const errorMessage = document.querySelector("#password-confirm + span.error");
+        const passwordErrors = [password1, password2, errorMessage];
+
+        form.addEventListener("submit", (event) => {
+        // if the email field is valid, we let the form submit
+        if (!(password2.value == password1.value)) {
+            // If it isn't, we display an error message
+            showError();
+            // Then we prevent the form from being sent by canceling the event
+            event.preventDefault();
+        } else {
+            alert("Success! Form has been submitted to nowhere!");
+        }
+        });
+
+       
+        password2.addEventListener("input", (event) => {
+            if(password2.value == password1.value) {
+                // submit
+                errorMessage.textContent = "";
+                passwordErrors.forEach((item) => {
+                item.className = "error";
+                }); // Reset the visual state of the message
+            } else {
+                // don't submit
+                showError();
+            }
+        })
+
+        const showError = () => {
+            errorMessage.textContent = "Passwords must match!";
+            passwordErrors.forEach((item) => {
+                item.className = "error active";
+            });
+        }
+
+        email.addEventListener("input", (event) =>{
+            if(email.validity.typeMismatch) {
+                email.setCustomValidity("Expecting a standard email address.");
+            } else {
+                email.setCustomValidity("");
+            }
+        });
+
+    </script>
+</footer>
+</html>
