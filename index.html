@@ -84,7 +84,7 @@ const form = document.getElementById("odin-form");
         form.addEventListener("submit", (event) => {
         // if the email field is valid, we let the form submit
         if (!(password2.value == password1.value)) {
-            // If it isn't, we display an appropriate error message
+            // If it isn't, we display an error message
             showError();
             // Then we prevent the form from being sent by canceling the event
             event.preventDefault();
